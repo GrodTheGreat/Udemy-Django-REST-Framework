@@ -20,5 +20,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path(route="admin/", view=admin.site.urls),
-    path(route="movies/", view=include("watchlist.urls")),
+    path(route="movies/", view=include("watchlist.api.urls")),
 ]
