@@ -9,22 +9,37 @@ urlpatterns = [
         view=views.WatchListDetailsAV.as_view(),
         name="watch-list-details",
     ),
-    path(
-        route="<int:pk>/reviews/",
-        view=views.ReviewList.as_view(),
-        name="review-list",
-    ),
-    path(
-        route="reviews/<int:pk>",
-        view=views.ReviewDetails.as_view(),
-        name="review-details",
-    ),
+    # path(
+    #     route="<int:pk>/reviews/",
+    #     view=views.ReviewList.as_view(),
+    #     name="review-list",
+    # ),
+    # path(
+    #     route="reviews/<int:pk>",
+    #     view=views.ReviewDetails.as_view(),
+    #     name="review-details",
+    # ),
     # path(route="reviews/", view=views.ReviewList.as_view(), name="reviews"),
     # path(
     #     route="reviews/<int:pk>/",
     #     view=views.ReviewDetails.as_view(),
     #     name="reviews",
     # ),
+    path(
+        route="<int:pk>/reviews/",
+        view=views.ReviewList.as_view(),
+        name="review-list",
+    ),
+    path(
+        route="<int:pk>/reviews-create",
+        view=views.ReviewCreate.as_view(),
+        name="review-create",
+    ),
+    path(
+        route="reviews/<int:pk>",
+        view=views.ReviewDetails.as_view(),
+        name="review-details",
+    ),
     path(
         route="platforms/",
         view=views.StreamingPlatformListAV.as_view(),
