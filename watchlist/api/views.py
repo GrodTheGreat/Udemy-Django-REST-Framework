@@ -18,7 +18,7 @@ class StreamingPlatformListAV(APIView):
         serializer = StreamingPlatformSerializer(
             streaming_platforms,
             many=True,
-            # context={"request": request},
+            context={"request": request},
         )
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
@@ -49,9 +49,15 @@ class StreamingPlatformDetailsAV(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        serializer = StreamingPlatformSerializer(streaming_platform)
+        serializer = StreamingPlatformSerializer(
+            streaming_platform,
+            context={"request": request},
+        )
 
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK,
+        )
 
     def put(self, request: Request, pk: int) -> Response:
         try:

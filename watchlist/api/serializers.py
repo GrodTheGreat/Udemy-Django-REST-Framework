@@ -5,7 +5,7 @@ from ..models import StreamingPlatform, WatchList
 
 
 class WatchListSerializer(serializers.ModelSerializer):
-    len_name = serializers.SerializerMethodField()
+    # len_name = serializers.SerializerMethodField()
 
     class Meta:
         model = WatchList
@@ -16,12 +16,12 @@ class WatchListSerializer(serializers.ModelSerializer):
             "platform",
             "active",
             "created",
-            "len_name",
+            # "len_name",
         ]  # or "__all__"
         # exclude = ['active']
 
-    def get_len_name(self, object: WatchList) -> int:
-        return len(object.title)
+    # def get_len_name(self, object: WatchList) -> int:
+    #     return len(object.title)
 
     # def validate_name(self, value: str) -> str:
     #     if len(value) < 2:
@@ -38,9 +38,17 @@ class WatchListSerializer(serializers.ModelSerializer):
     #     return data
 
 
-class StreamingPlatformSerializer(serializers.ModelSerializer):
+class StreamingPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="platform-details", lookup_field="pk"
+    )
     #! Name must match model field
-    watchlist = WatchListSerializer(many=True, read_only=True)
+    watchlist = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name="watch-list-details",
+        lookup_field="pk",
+    )
     # watchlist = serializers.StringRelatedField(many=True, read_only=True)
     # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     # watchlist = serializers.HyperlinkedRelatedField(
@@ -51,7 +59,7 @@ class StreamingPlatformSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StreamingPlatform
-        fields = "__all__"
+        fields = ["url", "id", "watchlist", "name", "about", "website"]
 
 
 # * Basic Serializer
