@@ -19,6 +19,7 @@ class WatchListSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "storyline",
+            "platform",
             "active",
             "created",
             "len_name",
