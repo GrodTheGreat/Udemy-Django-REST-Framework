@@ -5,16 +5,26 @@ from . import views
 urlpatterns = [
     path(route="", view=views.WatchListAV.as_view(), name="watch-list"),
     path(
-        route="<int:pk>",
+        route="<int:pk>/",
         view=views.WatchListDetailsAV.as_view(),
         name="watch-list-details",
     ),
-    path(route="reviews/", view=views.ReviewList.as_view(), name="reviews"),
     path(
-        route="reviews/<int:pk>/",
-        view=views.ReviewDetails.as_view(),
-        name="reviews",
+        route="<int:pk>/reviews/",
+        view=views.ReviewList.as_view(),
+        name="watch-list-details",
     ),
+    path(
+        route="/reviews/<int:pk>",
+        view=views.ReviewDetails.as_view(),
+        name="watch-list-details",
+    ),
+    # path(route="reviews/", view=views.ReviewList.as_view(), name="reviews"),
+    # path(
+    #     route="reviews/<int:pk>/",
+    #     view=views.ReviewDetails.as_view(),
+    #     name="reviews",
+    # ),
     path(
         route="platforms/",
         view=views.StreamingPlatformListAV.as_view(),
