@@ -5,19 +5,19 @@ from . import views
 urlpatterns = [
     path(route="", view=views.WatchListAV.as_view(), name="watch-list"),
     path(
-        route="<int:pk>/",
+        route="<int:pk>",
         view=views.WatchListDetailsAV.as_view(),
         name="watch-list-details",
     ),
     path(
         route="<int:pk>/reviews/",
         view=views.ReviewList.as_view(),
-        name="watch-list-details",
+        name="review-list",
     ),
     path(
-        route="/reviews/<int:pk>",
+        route="reviews/<int:pk>",
         view=views.ReviewDetails.as_view(),
-        name="watch-list-details",
+        name="review-details",
     ),
     # path(route="reviews/", view=views.ReviewList.as_view(), name="reviews"),
     # path(
@@ -31,7 +31,7 @@ urlpatterns = [
         name="platform-list",
     ),
     path(
-        route="platforms/<int:pk>/",
+        route="platforms/<int:pk>",
         view=views.StreamingPlatformDetailsAV.as_view(),
         name="platform-details",
     ),

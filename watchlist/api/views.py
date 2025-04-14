@@ -1,4 +1,8 @@
-from rest_framework import generics, mixins, status
+from rest_framework import (
+    generics,
+    # mixins,
+    status,
+)
 
 # from rest_framework.decorators import api_view
 from rest_framework.request import Request
@@ -13,27 +17,37 @@ from watchlist.api.serializers import (
 from watchlist.models import Review, StreamingPlatform, WatchList
 
 
-class ReviewDetails(mixins.RetrieveModelMixin, generics.GenericAPIView):
+class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    def get(self, request: Request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
 
-
-class ReviewList(
-    mixins.ListModelMixin,
-    mixins.CreateModelMixin,
-    generics.GenericAPIView,
-):
+class ReviewList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    def get(self, request: Request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request: Request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+# class ReviewDetails(mixins.RetrieveModelMixin, generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
+
+#     def get(self, request: Request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+
+
+# class ReviewList(
+#     mixins.ListModelMixin,
+#     mixins.CreateModelMixin,
+#     generics.GenericAPIView,
+# ):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
+
+#     def get(self, request: Request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+
+#     def post(self, request: Request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
 
 
 class StreamingPlatformListAV(APIView):
