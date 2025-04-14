@@ -1,39 +1,46 @@
-from typing import Any, Mapping
+# from typing import Any, Mapping
 from rest_framework import serializers
 
-from ..models import Movie
+from ..models import StreamingPlatform, WatchList
 
 
-class MovieSerializer(serializers.ModelSerializer):
+class StreamingPlatformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StreamingPlatform
+        fields = "__all__"
+
+
+class WatchListSerializer(serializers.ModelSerializer):
     len_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = Movie
+        model = WatchList
         fields = [
             "id",
-            "name",
-            "description",
+            "title",
+            "storyline",
             "active",
+            "created",
             "len_name",
         ]  # or "__all__"
         # exclude = ['active']
 
-    def get_len_name(self, object: Movie) -> int:
-        return len(object.name)
+    def get_len_name(self, object: WatchList) -> int:
+        return len(object.title)
 
-    def validate_name(self, value: str) -> str:
-        if len(value) < 2:
-            raise serializers.ValidationError("Name is too short!")
+    # def validate_name(self, value: str) -> str:
+    #     if len(value) < 2:
+    #         raise serializers.ValidationError("Name is too short!")
 
-        return value
+    #     return value
 
-    def validate(self, data: Mapping[str, Any]) -> Mapping[str, Any]:
-        if data["name"] == data["description"]:
-            raise serializers.ValidationError(
-                "Name and Description must be different!"
-            )
+    # def validate(self, data: Mapping[str, Any]) -> Mapping[str, Any]:
+    #     if data["name"] == data["description"]:
+    #         raise serializers.ValidationError(
+    #             "Name and Description must be different!"
+    #         )
 
-        return data
+    #     return data
 
 
 # * Basic Serializer
