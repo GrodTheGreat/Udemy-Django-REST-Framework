@@ -18,15 +18,12 @@ class MovieSerializer(serializers.Serializer):
         instance: Movie,
         validated_data: Mapping[str, Any],
     ) -> Movie:
-        instance.name = validated_data.get(key="name", default=instance.name)
+        instance.name = validated_data.get("name", instance.name)
         instance.description = validated_data.get(
-            key="description",
-            default=instance.description,
+            "description",
+            instance.description,
         )
-        instance.active = validated_data.get(
-            key="active",
-            default=instance.active,
-        )
+        instance.active = validated_data.get("active", instance.active)
         instance.save()
 
         return instance
