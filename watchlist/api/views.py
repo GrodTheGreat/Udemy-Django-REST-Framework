@@ -15,7 +15,11 @@ from watchlist.models import StreamingPlatform, WatchList
 class StreamingPlatformListAV(APIView):
     def get(self, request: Request) -> Response:
         streaming_platforms = StreamingPlatform.objects.all()
-        serializer = StreamingPlatformSerializer(streaming_platforms, many=True)
+        serializer = StreamingPlatformSerializer(
+            streaming_platforms,
+            many=True,
+            # context={"request": request},
+        )
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
