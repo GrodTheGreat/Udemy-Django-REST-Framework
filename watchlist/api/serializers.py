@@ -5,10 +5,21 @@ from ..models import Movie
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    len_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
-        fields = ["id", "name", "description", "active"]  # or "__all__"
+        fields = [
+            "id",
+            "name",
+            "description",
+            "active",
+            "len_name",
+        ]  # or "__all__"
         # exclude = ['active']
+
+    def get_len_name(self, object: Movie) -> int:
+        return len(object.name)
 
     def validate_name(self, value: str) -> str:
         if len(value) < 2:
