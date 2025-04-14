@@ -4,12 +4,6 @@ from rest_framework import serializers
 from ..models import StreamingPlatform, WatchList
 
 
-class StreamingPlatformSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StreamingPlatform
-        fields = "__all__"
-
-
 class WatchListSerializer(serializers.ModelSerializer):
     len_name = serializers.SerializerMethodField()
 
@@ -42,6 +36,15 @@ class WatchListSerializer(serializers.ModelSerializer):
     #         )
 
     #     return data
+
+
+class StreamingPlatformSerializer(serializers.ModelSerializer):
+    #! Name must match model field
+    watchlist = WatchListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = StreamingPlatform
+        fields = "__all__"
 
 
 # * Basic Serializer
