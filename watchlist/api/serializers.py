@@ -1,11 +1,18 @@
 # from typing import Any, Mapping
 from rest_framework import serializers
 
-from ..models import StreamingPlatform, WatchList
+from ..models import Review, StreamingPlatform, WatchList
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
 
 
 class WatchListSerializer(serializers.ModelSerializer):
     # len_name = serializers.SerializerMethodField()
+    reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = WatchList
@@ -16,6 +23,7 @@ class WatchListSerializer(serializers.ModelSerializer):
             "platform",
             "active",
             "created",
+            "reviews",
             # "len_name",
         ]  # or "__all__"
         # exclude = ['active']
