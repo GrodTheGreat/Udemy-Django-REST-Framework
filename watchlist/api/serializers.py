@@ -49,7 +49,7 @@ class WatchListSerializer(serializers.ModelSerializer):
 
 class StreamingPlatformSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name="platform-details", lookup_field="pk"
+        view_name="platform-detail", lookup_field="pk"
     )
     #! Name must match model field
     watchlist = serializers.HyperlinkedRelatedField(
