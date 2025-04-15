@@ -5,6 +5,8 @@ from ..models import Review, StreamingPlatform, WatchList
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Review
         # fields = "__all__"

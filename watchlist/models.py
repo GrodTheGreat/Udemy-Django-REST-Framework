@@ -1,5 +1,6 @@
-from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class StreamingPlatform(models.Model):
@@ -27,6 +28,7 @@ class WatchList(models.Model):
 
 
 class Review(models.Model):
+    author = models.ForeignKey(to=User, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(
         validators=[
             MinValueValidator(limit_value=1),
