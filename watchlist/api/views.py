@@ -68,107 +68,112 @@ class ReviewList(generics.ListAPIView):
 #         return self.create(request, *args, **kwargs)
 
 
-class StreamingPlatformViewSet(viewsets.ViewSet):
-    def list(self, request: Request) -> Response:
-        queryset = StreamingPlatform.objects.all()
-        serializer = StreamingPlatformSerializer(
-            queryset,
-            many=True,
-            context={"request": request},
-        )
-
-        return Response(serializer.data)
-
-    def retrieve(self, request: Request, pk: int) -> Response:
-        queryset = StreamingPlatform.objects.all()
-        watchlist = get_object_or_404(queryset, pk=pk)
-        serializer = StreamingPlatformSerializer(
-            watchlist,
-            context={"request": request},
-        )
-
-        return Response(serializer.data)
+class StreamingPlatformViewSet(viewsets.ModelViewSet):
+    queryset = StreamingPlatform.objects.all()
+    serializer_class = StreamingPlatformSerializer
 
 
-class StreamingPlatformListAV(APIView):
-    def get(self, request: Request) -> Response:
-        streaming_platforms = StreamingPlatform.objects.all()
-        serializer = StreamingPlatformSerializer(
-            streaming_platforms,
-            many=True,
-            context={"request": request},
-        )
+# class StreamingPlatformViewSet(viewsets.ViewSet):
+#     def list(self, request: Request) -> Response:
+#         queryset = StreamingPlatform.objects.all()
+#         serializer = StreamingPlatformSerializer(
+#             queryset,
+#             many=True,
+#             context={"request": request},
+#         )
 
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+#         return Response(serializer.data)
 
-    def post(self, request: Request) -> Response:
-        serializer = StreamingPlatformSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(
-                data=serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+#     def retrieve(self, request: Request, pk: int) -> Response:
+#         queryset = StreamingPlatform.objects.all()
+#         watchlist = get_object_or_404(queryset, pk=pk)
+#         serializer = StreamingPlatformSerializer(
+#             watchlist,
+#             context={"request": request},
+#         )
 
-        serializer.save()
-
-        return Response(
-            data=serializer.data,
-            status=status.HTTP_201_CREATED,
-        )
+#         return Response(serializer.data)
 
 
-class StreamingPlatformDetailsAV(APIView):
-    def get(self, request: Request, pk: int) -> Response:
-        try:
-            streaming_platform = StreamingPlatform.objects.get(pk=pk)
-        except StreamingPlatform.DoesNotExist:
-            return Response(
-                data={"Error": "Streaming Platform not found"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+# class StreamingPlatformListAV(APIView):
+#     def get(self, request: Request) -> Response:
+#         streaming_platforms = StreamingPlatform.objects.all()
+#         serializer = StreamingPlatformSerializer(
+#             streaming_platforms,
+#             many=True,
+#             context={"request": request},
+#         )
 
-        serializer = StreamingPlatformSerializer(
-            streaming_platform,
-            context={"request": request},
-        )
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-        return Response(
-            data=serializer.data,
-            status=status.HTTP_200_OK,
-        )
+#     def post(self, request: Request) -> Response:
+#         serializer = StreamingPlatformSerializer(data=request.data)
+#         if not serializer.is_valid():
+#             return Response(
+#                 data=serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
 
-    def put(self, request: Request, pk: int) -> Response:
-        try:
-            streaming_platform = StreamingPlatform.objects.get(pk=pk)
-        except StreamingPlatform.DoesNotExist:
-            return Response(
-                data={"Error": "Streaming Platform not found"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        serializer = StreamingPlatformSerializer(
-            streaming_platform,
-            data=request.data,
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(data=serializer.data)
-        else:
-            return Response(
-                data=serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+#         serializer.save()
 
-    def delete(self, request: Request, pk: int) -> Response:
-        try:
-            streaming_platform = StreamingPlatform.objects.get(pk=pk)
-        except StreamingPlatform.DoesNotExist:
-            return Response(
-                data={"Error": "Streaming Platform not found"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        streaming_platform.delete()
+#         return Response(
+#             data=serializer.data,
+#             status=status.HTTP_201_CREATED,
+#         )
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+# class StreamingPlatformDetailsAV(APIView):
+#     def get(self, request: Request, pk: int) -> Response:
+#         try:
+#             streaming_platform = StreamingPlatform.objects.get(pk=pk)
+#         except StreamingPlatform.DoesNotExist:
+#             return Response(
+#                 data={"Error": "Streaming Platform not found"},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
+
+#         serializer = StreamingPlatformSerializer(
+#             streaming_platform,
+#             context={"request": request},
+#         )
+
+#         return Response(
+#             data=serializer.data,
+#             status=status.HTTP_200_OK,
+#         )
+
+#     def put(self, request: Request, pk: int) -> Response:
+#         try:
+#             streaming_platform = StreamingPlatform.objects.get(pk=pk)
+#         except StreamingPlatform.DoesNotExist:
+#             return Response(
+#                 data={"Error": "Streaming Platform not found"},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
+#         serializer = StreamingPlatformSerializer(
+#             streaming_platform,
+#             data=request.data,
+#         )
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(data=serializer.data)
+#         else:
+#             return Response(
+#                 data=serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+
+#     def delete(self, request: Request, pk: int) -> Response:
+#         try:
+#             streaming_platform = StreamingPlatform.objects.get(pk=pk)
+#         except StreamingPlatform.DoesNotExist:
+#             return Response(
+#                 data={"Error": "Streaming Platform not found"},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
+#         streaming_platform.delete()
+
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class WatchListAV(APIView):
