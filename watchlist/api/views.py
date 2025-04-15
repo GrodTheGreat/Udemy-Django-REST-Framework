@@ -22,6 +22,10 @@ from watchlist.api.serializers import (
 )
 
 from ..models import Review, StreamingPlatform, WatchList
+from .permissions import (
+    # AdminOrReadOnly,
+    ReviewUserOrReadOnly,
+)
 
 
 class ReviewCreate(generics.CreateAPIView):
@@ -50,7 +54,7 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [ReviewUserOrReadOnly]
 
 
 # class ReviewList(generics.ListCreateAPIView):
