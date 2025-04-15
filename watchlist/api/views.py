@@ -8,6 +8,9 @@ from rest_framework import (
 
 # from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,12 +50,14 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 # class ReviewList(generics.ListCreateAPIView):
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         pk = self.kwargs["pk"]
