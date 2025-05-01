@@ -24,6 +24,8 @@ class WatchListSerializer(serializers.ModelSerializer):
             "title",
             "storyline",
             "platform",
+            "avg_rating",
+            "total_reviews",
             "active",
             "created",
             "reviews",

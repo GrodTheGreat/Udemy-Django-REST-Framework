@@ -13,7 +13,7 @@ router.register(
 urlpatterns = [
     path(route="", view=views.WatchListAV.as_view(), name="watch-list"),
     path(
-        route="<int:pk>",
+        route="<int:pk>/",
         view=views.WatchListDetailsAV.as_view(),
         name="watch-list-details",
     ),
@@ -44,7 +44,7 @@ urlpatterns = [
         name="review-create",
     ),
     path(
-        route="reviews/<int:pk>",
+        route="reviews/<int:pk>/",
         view=views.ReviewDetails.as_view(),
         name="review-details",
     ),

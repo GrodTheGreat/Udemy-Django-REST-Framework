@@ -48,6 +48,16 @@ class ReviewCreate(generics.CreateAPIView):
                 detail="You have already reviewed this watchlist"
             )
 
+        if watchlist.total_reviews != 0:
+            watchlist.avg_rating = (
+                sum([review.rating for review in watchlist.reviews.all()])
+                + serializer.validated_data["rating"]
+            ) / (watchlist.total_reviews + 1)
+        else:
+            watchlist.avg_rating = serializer.validated_data["rating"]
+        watchlist.total_reviews = watchlist.total_reviews + 1
+        watchlist.save()
+
         return serializer.save(watchlist=watchlist, author=author)
 
 
